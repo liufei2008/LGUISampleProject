@@ -3,6 +3,7 @@
 #include "SampleCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ASampleCharacter::ASampleCharacter()
@@ -70,18 +71,48 @@ void ASampleCharacter::Move(FVector direction, float amount)
 }
 void ASampleCharacter::Yaw(float amount)
 {
-	if (rightMouseButtonDown && (amount != 0))
+	bool canYaw = false;
+	if (UGameplayStatics::GetPlatformName().Equals(FString(TEXT("Android"))))
 	{
+		if (amount != 0)canYaw = true;
+	}
+	else
+	{
+		if (rightMouseButtonDown && (amount != 0))canYaw = true;
+	}
+	if (canYaw)
+	{
+#if ENGINE_MINOR_VERSION >= 24
+		auto rotation = MainCamera->GetRelativeRotation();
+#else
 		auto rotation = MainCamera->RelativeRotation;
+#endif
 		rotation.Yaw += mouseXSensitivity * amount;
 		MainCamera->SetRelativeRotation(rotation);
 	}
 }
 void ASampleCharacter::Pitch(float amount)
 {
-	if (rightMouseButtonDown && (amount != 0))
+	bool canPitch = false;
+	if (UGameplayStatics::GetPlatformName().Equals(FString(TEXT("Android"))))
 	{
+		if (amount != 0)
+		{
+			canPitch = true;
+			amount = -amount;
+		}
+	}
+	else
+	{
+		if (rightMouseButtonDown && (amount != 0))canPitch = true;
+	}
+	if (canPitch)
+	{
+#if ENGINE_MINOR_VERSION >= 24
+		auto rotation = MainCamera->GetRelativeRotation();
+#else
 		auto rotation = MainCamera->RelativeRotation;
+#endif
 		rotation.Pitch += mouseYSensitivity * amount;
 		rotation.Pitch = FMath::Clamp(rotation.Pitch, pitchAngleMin, pitchAngleMax);
 		MainCamera->SetRelativeRotation(rotation);
