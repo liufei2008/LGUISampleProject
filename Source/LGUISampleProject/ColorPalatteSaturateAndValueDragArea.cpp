@@ -2,37 +2,18 @@
 
 #include "ColorPalatteSaturateAndValueDragArea.h"
 
-UColorPalatteSaturateAndValueDragArea::UColorPalatteSaturateAndValueDragArea()
-{
-	PrimaryComponentTick.bCanEverTick = false;
-}
-
-void UColorPalatteSaturateAndValueDragArea::BeginPlay()
-{
-	Super::BeginPlay();
-}
-void UColorPalatteSaturateAndValueDragArea::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-void UColorPalatteSaturateAndValueDragArea::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-	Super::EndPlay(EndPlayReason);
-	
-}
-
-bool UColorPalatteSaturateAndValueDragArea::OnPointerBeginDrag_Implementation(const FLGUIPointerEventData& eventData)
+bool UColorPalatteSaturateAndValueDragArea::OnPointerBeginDrag_Implementation(ULGUIPointerEventData* eventData)
 {
 	return true;
 }
-bool UColorPalatteSaturateAndValueDragArea::OnPointerDrag_Implementation(const FLGUIPointerEventData& eventData)
+bool UColorPalatteSaturateAndValueDragArea::OnPointerDrag_Implementation(ULGUIPointerEventData* eventData)
 {
 	if (_RootUIItem == nullptr)
 	{
 		_RootUIItem = (UUIItem*)(GetOwner()->GetRootComponent());
 	}
-	auto worldPoint = eventData.GetWorldPointInPlane();
-	FVector2D newLocation = FVector2D(eventData.pressWorldToLocalTransform.TransformPosition(worldPoint));
+	auto worldPoint = eventData->GetWorldPointInPlane();
+	FVector2D newLocation = FVector2D(eventData->pressWorldToLocalTransform.TransformPosition(worldPoint));
 	newLocation.X = FMath::Clamp(newLocation.X, 0.0f, _RootUIItem->GetWidth());
 	newLocation.Y = FMath::Clamp(newLocation.Y, 0.0f, _RootUIItem->GetHeight());
 	if (SaturateAndValueChangeDelegate.IsBound())
@@ -40,17 +21,17 @@ bool UColorPalatteSaturateAndValueDragArea::OnPointerDrag_Implementation(const F
 	_PickerCircleActor->GetUISprite()->SetAnchorOffset(newLocation);
 	return true;
 }
-bool UColorPalatteSaturateAndValueDragArea::OnPointerEndDrag_Implementation(const FLGUIPointerEventData& eventData)
+bool UColorPalatteSaturateAndValueDragArea::OnPointerEndDrag_Implementation(ULGUIPointerEventData* eventData)
 {
 	return true;
 }
 
-bool UColorPalatteSaturateAndValueDragArea::OnPointerDown_Implementation(const FLGUIPointerEventData& eventData)
+bool UColorPalatteSaturateAndValueDragArea::OnPointerDown_Implementation(ULGUIPointerEventData* eventData)
 {
 	OnPointerDrag_Implementation(eventData);
 	return true;
 }
-bool UColorPalatteSaturateAndValueDragArea::OnPointerUp_Implementation(const FLGUIPointerEventData& eventData)
+bool UColorPalatteSaturateAndValueDragArea::OnPointerUp_Implementation(ULGUIPointerEventData* eventData)
 {
 	return true;
 }

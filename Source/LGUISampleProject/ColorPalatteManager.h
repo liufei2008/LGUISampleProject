@@ -9,16 +9,12 @@
 
 //调色工具
 UCLASS(ClassGroup = (Custom), Blueprintable, meta = (BlueprintSpawnableComponent))
-class LGUISAMPLEPROJECT_API UColorPalatteManager : public UActorComponent
+class LGUISAMPLEPROJECT_API UColorPalatteManager : public ULGUIBehaviour
 {
 	GENERATED_BODY()
 
-public:	
-	UColorPalatteManager();
 protected:
-	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason)override;
+	virtual void Awake() override;
 
 	FVector _CurrentColorHSV = FVector(0, 1.0f, 1.0f);
 	FVector _OldColorHSV = FVector(0, 1.0f, 1.0f);

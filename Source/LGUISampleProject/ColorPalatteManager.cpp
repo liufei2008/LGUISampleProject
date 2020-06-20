@@ -3,13 +3,9 @@
 #include "ColorPalatteManager.h"
 #include "ColorPalatteSaturateAndValueDragArea.h"
 
-UColorPalatteManager::UColorPalatteManager()
+void UColorPalatteManager::Awake()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-}
-void UColorPalatteManager::BeginPlay()
-{
-	Super::BeginPlay();
+	Super::Awake();
 	_ColorPickerSaturateAndValueDrag = _ColorPickerSaturateAndValueDragActor->FindComponentByClass<UColorPalatteSaturateAndValueDragArea>();
 	_ColorPickerSaturateAndValueDrag->SaturateAndValueChangeDelegate.BindUObject(this, &UColorPalatteManager::OnColorPickerSaturateAndValueChange);
 	_ColorPickerSlider = _ColorPickerSliderActor->FindComponentByClass<UUISliderComponent>();
@@ -30,14 +26,6 @@ void UColorPalatteManager::BeginPlay()
 	_ValueSlider->RegisterSlideEvent(FLGUIFloatDelegate::CreateUObject(this, &UColorPalatteManager::OnValueSliderValueChange));
 
 	ApplyColorChange();
-}
-void UColorPalatteManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-void UColorPalatteManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-	Super::EndPlay(EndPlayReason);
 }
 
 void UColorPalatteManager::OnColorPickerSaturateAndValueChange(FVector2D InValue)

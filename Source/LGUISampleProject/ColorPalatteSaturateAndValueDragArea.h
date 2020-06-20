@@ -14,25 +14,19 @@ class LGUISAMPLEPROJECT_API UColorPalatteSaturateAndValueDragArea : public UActo
 {
 	GENERATED_BODY()
 
-public:	
-	UColorPalatteSaturateAndValueDragArea();
-
 protected:
-	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	UPROPERTY(EditAnywhere)
 		AUISpriteActor* _PickerCircleActor;
 	UUIItem* _RootUIItem;
 
 public:
-	virtual bool OnPointerBeginDrag_Implementation(const FLGUIPointerEventData& eventData)override;
-	virtual bool OnPointerDrag_Implementation(const FLGUIPointerEventData& eventData)override;
-	virtual bool OnPointerEndDrag_Implementation(const FLGUIPointerEventData& eventData)override;
+	virtual bool OnPointerBeginDrag_Implementation(ULGUIPointerEventData* eventData)override;
+	virtual bool OnPointerDrag_Implementation(ULGUIPointerEventData* eventData)override;
+	virtual bool OnPointerEndDrag_Implementation(ULGUIPointerEventData* eventData)override;
 
-	virtual bool OnPointerDown_Implementation(const FLGUIPointerEventData& eventData)override;
-	virtual bool OnPointerUp_Implementation(const FLGUIPointerEventData& eventData)override;
+	virtual bool OnPointerDown_Implementation(ULGUIPointerEventData* eventData)override;
+	virtual bool OnPointerUp_Implementation(ULGUIPointerEventData* eventData)override;
 
 	FLGUIVector2Delegate SaturateAndValueChangeDelegate;
 	void SetSaturateAndValue(float InSaturate, float InValue);
