@@ -159,5 +159,5 @@ void UColorPalatteManager::Button_Confirm()
 }
 void UColorPalatteManager::Button_Close()
 {
-	ULGUIBPLibrary::DeleteActor(GetOwner());
+	ULGUIBPLibrary::DestroyActorWithHierarchy(GetOwner());
 }
