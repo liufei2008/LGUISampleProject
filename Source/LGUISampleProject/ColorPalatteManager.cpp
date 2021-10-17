@@ -114,9 +114,9 @@ void UColorPalatteManager::ApplyColorChange()
 	_RedSliderTextureActor->GetUITexture()->SetColor(newColorRGB);
 	_GreenSliderTextureActor->GetUITexture()->SetColor(newColorRGB);
 	_BlueSliderTextureActor->GetUITexture()->SetColor(newColorRGB);
-	_RedSliderTextActor->GetUIText()->SetText(FString::Printf(TEXT("%d"), newColorRGB.R));
-	_GreenSliderTextActor->GetUIText()->SetText(FString::Printf(TEXT("%d"), newColorRGB.G));
-	_BlueSliderTextActor->GetUIText()->SetText(FString::Printf(TEXT("%d"), newColorRGB.B));
+	_RedSliderTextActor->GetUIText()->SetText(FText::FromString(FString::Printf(TEXT("%d"), newColorRGB.R)));
+	_GreenSliderTextActor->GetUIText()->SetText(FText::FromString(FString::Printf(TEXT("%d"), newColorRGB.G)));
+	_BlueSliderTextActor->GetUIText()->SetText(FText::FromString(FString::Printf(TEXT("%d"), newColorRGB.B)));
 
 	FLinearColor newColorH_NoSV(_CurrentColorHSV.X, 1.0f, 1.0f);
 	auto newColorRGBFromH = newColorH_NoSV.HSVToLinearRGB().ToFColor(false);
@@ -134,9 +134,9 @@ void UColorPalatteManager::ApplyColorChange()
 	newColorRGBFromH.B *= hsv_v;
 	_SaturateSliderTextureActor->GetUITexture()->SetColor(newColorRGBFromH);
 	_ValueSliderTextureActor->GetUITexture()->SetColor(newColorRGB);
-	_HueSliderTextActor->GetUIText()->SetText(FString::Printf(TEXT("%d"), (int)(linearColorHSV.R)));
-	_SaturateSliderTextActor->GetUIText()->SetText(FString::Printf(TEXT("%d"), (int)(linearColorHSV.G * 255)));
-	_ValueSliderTextActor->GetUIText()->SetText(FString::Printf(TEXT("%d"), (int)(linearColorHSV.B * 255)));
+	_HueSliderTextActor->GetUIText()->SetText(FText::FromString(FString::Printf(TEXT("%d"), (int)(linearColorHSV.R))));
+	_SaturateSliderTextActor->GetUIText()->SetText(FText::FromString(FString::Printf(TEXT("%d"), (int)(linearColorHSV.G * 255))));
+	_ValueSliderTextActor->GetUIText()->SetText(FText::FromString(FString::Printf(TEXT("%d"), (int)(linearColorHSV.B * 255))));
 }
 
 float UColorPalatteManager::_OneOfUint8 = 1.0f / 255;
