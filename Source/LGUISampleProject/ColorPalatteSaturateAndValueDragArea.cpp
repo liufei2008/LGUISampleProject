@@ -13,12 +13,13 @@ bool UColorPalatteSaturateAndValueDragArea::OnPointerDrag_Implementation(ULGUIPo
 		_RootUIItem = (UUIItem*)(GetOwner()->GetRootComponent());
 	}
 	auto worldPoint = eventData->GetWorldPointInPlane();
-	FVector2D newLocation = FVector2D(eventData->pressWorldToLocalTransform.TransformPosition(worldPoint));
+	auto newLocation3D = eventData->pressWorldToLocalTransform.TransformPosition(worldPoint);
+	auto newLocation = FVector2D(newLocation3D.Y, newLocation3D.Z);
 	newLocation.X = FMath::Clamp(newLocation.X, 0.0f, _RootUIItem->GetWidth());
 	newLocation.Y = FMath::Clamp(newLocation.Y, 0.0f, _RootUIItem->GetHeight());
 	if (SaturateAndValueChangeDelegate.IsBound())
 		SaturateAndValueChangeDelegate.Execute(FVector2D(newLocation.X / _RootUIItem->GetWidth(), newLocation.Y / _RootUIItem->GetHeight()));
-	_PickerCircleActor->GetUISprite()->SetAnchorOffset(newLocation);
+	_PickerCircleActor->GetUISprite()->SetAnchoredPosition(newLocation);
 	return true;
 }
 bool UColorPalatteSaturateAndValueDragArea::OnPointerEndDrag_Implementation(ULGUIPointerEventData* eventData)
@@ -43,5 +44,5 @@ void UColorPalatteSaturateAndValueDragArea::SetSaturateAndValue(float InSaturate
 		_RootUIItem = (UUIItem*)(GetOwner()->GetRootComponent());
 	}
 	FVector2D newLocation(InSaturate * _RootUIItem->GetWidth(), InValue * _RootUIItem->GetHeight());
-	_PickerCircleActor->GetUISprite()->SetAnchorOffset(newLocation);
+	_PickerCircleActor->GetUISprite()->SetAnchoredPosition(newLocation);
 }

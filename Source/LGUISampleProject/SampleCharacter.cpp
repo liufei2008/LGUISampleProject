@@ -82,10 +82,10 @@ void ASampleCharacter::Yaw(float amount)
 	}
 	if (canYaw)
 	{
-#if ENGINE_MINOR_VERSION >= 24
-		auto rotation = MainCamera->GetRelativeRotation();
-#else
+#if ENGINE_MAJOR_VERSION == 4 && ENGINE_MINOR_VERSION < 24
 		auto rotation = MainCamera->RelativeRotation;
+#else
+		auto rotation = MainCamera->GetRelativeRotation();
 #endif
 		rotation.Yaw += mouseXSensitivity * amount;
 		MainCamera->SetRelativeRotation(rotation);
@@ -108,10 +108,10 @@ void ASampleCharacter::Pitch(float amount)
 	}
 	if (canPitch)
 	{
-#if ENGINE_MINOR_VERSION >= 24
-		auto rotation = MainCamera->GetRelativeRotation();
-#else
+#if ENGINE_MAJOR_VERSION == 4 && ENGINE_MINOR_VERSION < 24
 		auto rotation = MainCamera->RelativeRotation;
+#else
+		auto rotation = MainCamera->GetRelativeRotation();
 #endif
 		rotation.Pitch += mouseYSensitivity * amount;
 		rotation.Pitch = FMath::Clamp(rotation.Pitch, pitchAngleMin, pitchAngleMax);

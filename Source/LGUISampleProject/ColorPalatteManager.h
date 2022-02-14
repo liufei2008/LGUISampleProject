@@ -9,7 +9,7 @@
 
 //调色工具
 UCLASS(ClassGroup = (Custom), Blueprintable, meta = (BlueprintSpawnableComponent))
-class LGUISAMPLEPROJECT_API UColorPalatteManager : public ULGUIBehaviour
+class LGUISAMPLEPROJECT_API UColorPalatteManager : public ULGUILifeCycleUIBehaviour
 {
 	GENERATED_BODY()
 
